@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificador Mensual de Comidas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Planificador Mensual de Comidas y Cenas</h1>
+        <p>Gestiona tu despensa mensual e ingredientes activos.</p>
+    </header>
+
+    <div class="layout">
+        <!-- Panel Principal: Grid de Planificación -->
+        <main class="card">
+            <div class="controls-row">
+                <div class="form-group-inline">
+                    <label for="currentMonth"><strong>Visualizar:</strong></label>
+                    <select id="currentMonth" onchange="renderPlanificador()">
+                        <option value="Semana 1">Semana 1 del Mes</option>
+                        <option value="Semana 2">Semana 2 del Mes</option>
+                        <option value="Semana 3">Semana 3 del Mes</option>
+                        <option value="Semana 4">Semana 4 del Mes</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-success" onclick="exportarJSON()">Exportar JSON</button>
+                    <button style="background: #64748b;" onclick="importarJSON()">Importar JSON</button>
+                </div>
+            </div>
+
+            <!-- Contenedor dinámico donde se generan los 7 días de la semana -->
+            <div class="planner-grid" id="plannerGrid"></div>
+        </main>
+
+        <!-- Panel Lateral: Inventario -->
+        <aside class="card">
+            <h2 id="formTitle">Registrar Producto</h2>
+            <form id="productForm" onsubmit="guardarProducto(event)">
+                <input type="hidden" id="editingProductId" value="">
+                <div class="form-group">
+                    <label for="prodName">Nombre del Producto</label>
+                    <input type="text" id="prodName" placeholder="Ej. Pollo, Arroz..." required>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="prodDisponible" checked> Disponible</label>
+                        <label><input type="checkbox" id="prodCongelador"> En Congelador</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="prodNotas">Anotaciones</label>
+                    <input type="text" id="prodNotas" placeholder="Ej. En el cajón superior">
+                </div>
+                <div class="form-actions-flex">
+                    <button type="submit" id="btnSubmitForm" style="width: 100%;">Registrar Producto</button>
+                    <button type="button" id="btnCancelEdit" style="background:#64748b; display:none; width: 100%;" onclick="cancelarEdicion()">Cancelar</button>
+                </div>
+            </form>
+
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+
+            <h3>Inventario de Productos</h3>
+            <ul class="product-list" id="productList"></ul>
+        </aside>
+    </div>
+</div>
+
+<!-- Modal para gestionar platos -->
+<div class="modal" id="dishModal">
+    <div class="modal-content">
+        <h3 id="modalTitle">Añadir Plato</h3>
+        <input type="hidden" id="modalDia">
+        <input type="hidden" id="modalMomento">
+        
+        <div class="form-group" style="margin-top: 15px;">
+            <label for="dishName">Nombre de la Receta / Plato</label>
+            <input type="text" id="dishName" placeholder="Ej. Arroz con pollo" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Vincular Ingredientes Disponibles:</label>
+            <div class="ingredients-select-list" id="modalIngredients"></div>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+            <button type="button" style="background:#64748b;" onclick="cerrarModal()">Cancelar</button>
+            <button type="button" onclick="guardarPlato()">Asignar al Menú</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

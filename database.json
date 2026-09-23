@@ -1,0 +1,13 @@
+{
+  "productos": [
+    { "id": 1, "nombre": "Arroz", "disponible": true, "congelador": false, "notas": "Paquete integral 1kg" },
+    { "id": 2, "nombre": "Pollo", "disponible": true, "congelador": true, "notas": "Pechugas en cajón 2" },
+    { "id": 3, "nombre": "Ternera", "disponible": false, "congelador": true, "notas": "Agotado" }
+  ],
+  "planificacion": {
+    "Semana 1": {},
+    "Semana 2": {},
+    "Semana 3": {},
+    "Semana 4": {}
+  }
+}
